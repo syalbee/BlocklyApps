@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_gradient"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/img_utama"
+        android:layout_width="401dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="48dp"
+        android:src="@drawable/utama_bg" />
+
+    <ImageView
+        android:layout_width="68dp"
+        android:layout_height="71dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="50dp"
+        android:layout_marginBottom="173dp"
+        android:src="@drawable/puzzle1" />
+
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="70dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="150dp"
+        android:layout_marginBottom="227dp"
+        android:src="@drawable/messages" />
+
+    <Button
+        android:id="@+id/btn_blok"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="80dp"
+        android:layout_marginBottom="132dp"
+        android:layout_toEndOf="@+id/img_utama"
+        android:background="@drawable/custom_btn"
+        android:elevation="10dp"
+        android:padding="10dp"
+        android:text="Mulai"
+        android:textColor="#ffffff"
+        android:onClick="webApp"/>
+
+    <Button
+        android:id="@+id/bt_btn"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:layout_above="@+id/btn_blok"
+        android:layout_marginStart="78dp"
+        android:layout_marginBottom="21dp"
+        android:layout_toEndOf="@+id/img_utama"
+        android:background="@drawable/custom_btn_bt"
+        android:elevation="10dp"
+        android:padding="10dp"
+        android:onClick="scanBT"
+        android:text="Koneksi Bluetooth"
+        android:textColor="#ffffff" />
+
+</RelativeLayout>

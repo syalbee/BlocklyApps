@@ -36,7 +36,7 @@ public class BtList extends Activity {
     private Button connect;
     private ListView listView;
     private BluetoothAdapter mBTAdapter;
-    private static final int BT_ENABLE_REQUEST = 10; // This is the code we use for BT Enable
+    private static final int BT_ENABLE_REQUEST = 10;
     private static final int SETTINGS = 20;
     private UUID mDeviceUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     private int mBufferSize = 50000; //Default
@@ -73,8 +73,8 @@ public class BtList extends Activity {
         } else {
             initList(new ArrayList<BluetoothDevice>());
         }
-        search.setOnClickListener(new View.OnClickListener() {
 
+        search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 mBTAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -103,13 +103,11 @@ public class BtList extends Activity {
         });
     }
     protected void onPause() {
-// TODO Auto-generated method stub
         super.onPause();
     }
 
     @Override
     protected void onStop() {
-// TODO Auto-generated method stub
         super.onStop();
     }
 

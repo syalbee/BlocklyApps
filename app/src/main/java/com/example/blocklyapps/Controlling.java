@@ -1,6 +1,6 @@
 package com.example.blocklyapps;
 
-import android.app.Activity;
+
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -15,41 +15,33 @@ import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.widget.Button;
 import android.widget.Toast;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.UUID;
 
-public class Controlling extends Activity {
+public class Controlling extends AppCompatActivity {
 
+    public static  final String webUrl = "http://192.168.100.103/ble/blockly_custom.html";
     private static final String TAG = "BlueTest5-Controlling";
-    private int mMaxChars = 50000;//Default//change this to string..........
+    private int mMaxChars = 50000;
     private UUID mDeviceUUID;
     private BluetoothSocket mBTSocket;
     private ReadInput mReadThread = null;
 
     private boolean mIsUserInitiatedDisconnect = false;
     private boolean mIsBluetoothConnected = false;
-
-
     private Button mBtnDisconnect;
     private BluetoothDevice mDevice;
 
-    final static String on = "92";//on
-    final static String off = "79";//off
-
-
     private ProgressDialog progressDialog;
-    Button btnOn, btnOff;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_controlling);
         ActivityHelper.initialize(this);
-        // mBtnDisconnect = (Button) findViewById(R.id.btnDisconnect);
-        btnOn = (Button) findViewById(R.id.on);
-        btnOff = (Button) findViewById(R.id.off);
+
         Intent intent = getIntent();
         Bundle b = intent.getExtras();
         mDevice = b.getParcelable(BtList.DEVICE_EXTRA);
@@ -57,32 +49,32 @@ public class Controlling extends Activity {
         mMaxChars = b.getInt(BtList.BUFFER_SIZE);
         Log.d(TAG, "Ready");
 
-        Intent pindah = new Intent(this,WebBlockly.class);
-        startActivity(pindah);
-        btnOn.setOnClickListener(new View.OnClickListener() {
+        Button btnSend = findViewById(R.id.btnSend);
+
+        WebViewFragment webViewFragment = new WebViewFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, webViewFragment).commit();
+
+        btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendData('1');
+                receiveData("apakamu");
             }
         });
-
-        btnOff.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            sendData('0');
-            }
-        });
-
-
     }
 
-    public void sendData(char a){
+    @JavascriptInterface
+    public void receiveData(String a){
+        Log.d("Pesan", a);
         try {
-            mBTSocket.getOutputStream().write(a);
+            for(int i=0; i<a.length();i++){
+                char c = a.charAt(i);
+                mBTSocket.getOutputStream().write(c);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 
     private class ReadInput implements Runnable {
 
@@ -101,7 +93,6 @@ public class Controlling extends Activity {
         @Override
         public void run() {
             InputStream inputStream;
-
             try {
                 inputStream = mBTSocket.getInputStream();
                 while (!bStop) {
@@ -109,18 +100,9 @@ public class Controlling extends Activity {
                     if (inputStream.available() > 0) {
                         inputStream.read(buffer);
                         int i = 0;
-                        /*
-                         * This is needed because new String(buffer) is taking the entire buffer i.e. 256 chars on Android 2.3.4 http://stackoverflow.com/a/8843462/1287554
-                         */
                         for (i = 0; i < buffer.length && buffer[i] != 0; i++) {
                         }
                         final String strInput = new String(buffer, 0, i);
-
-                        /*
-                         * If checked then receive text, better design would probably be to stop thread if unchecked and free resources, but this is a quick fix
-                         */
-
-
                     }
                     Thread.sleep(500);
                 }
@@ -171,7 +153,6 @@ public class Controlling extends Activity {
                 finish();
             }
         }
-
     }
 
     private void msg(String s) {
@@ -249,7 +230,6 @@ public class Controlling extends Activity {
 
     @Override
     protected void onDestroy() {
-        // TODO Auto-generated method stub
         super.onDestroy();
     }
 

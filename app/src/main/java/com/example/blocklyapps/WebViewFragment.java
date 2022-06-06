@@ -26,9 +26,8 @@ public class WebViewFragment extends Fragment {
         webSettings.setJavaScriptEnabled(true);
         webView.setWebChromeClient(new WebChromeClient());
 
-//        webView.addJavascriptInterface(new WebAppInterface(getActivity()), "Android");
-        webView.addJavascriptInterface(new WebBlockly(), "Android");
-        webView.loadUrl(WebBlockly.webUrl);
+        webView.addJavascriptInterface(new Controlling(), "Android");
+        webView.loadUrl(Controlling.webUrl);
         return view;
     }
 }

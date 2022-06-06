@@ -25,10 +25,4 @@ public class WebBlockly extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, webViewFragment).commit();
     }
 
-    @JavascriptInterface
-    public void showToast(String data){
-        Log.d("pesan", data);
-
-    }
-
 }

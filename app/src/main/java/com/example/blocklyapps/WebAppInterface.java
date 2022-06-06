@@ -12,8 +12,8 @@ public class WebAppInterface {
     }
 
     @JavascriptInterface
-    public void showToast(String data){
+    public void terimaData(String data){
         Log.d("Pesan", data);
-        Toast.makeText(context, data, Toast.LENGTH_LONG).show();
     }
+
 }
